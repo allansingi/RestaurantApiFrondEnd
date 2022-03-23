@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Menu } from './services/menu';
 import { MenuService } from './services/menu.service';
 
@@ -11,6 +12,7 @@ import { MenuService } from './services/menu.service';
 export class AppComponent implements OnInit {
 
   public menus: Menu[] = [];
+  public editMenu: Menu | undefined;
 
   constructor(private menuService: MenuService) {}
 
@@ -19,16 +21,56 @@ export class AppComponent implements OnInit {
   }
 
   public getMenus(): void {
-    this.menuService.getMenus().subscribe(
-      (response: Menu[]) => {
+    this.menuService.getMenus().subscribe({
+      next: (response: Menu[]) => {
         this.menus = response;
         console.log(this.menus);
+      },
+      error: (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    });
+  }
+
+  public onAddMenu(addMenuForm: NgForm): void {
+    document.getElementById('add-menu-form')?.click();
+    this.menuService.addMenu(addMenuForm.value).subscribe({
+      next: (response: Menu) => {
+        console.log(response);
+        this.getMenus();
+        addMenuForm.reset();
+      },
+      error: (error: HttpErrorResponse) => {
+        alert(error.message);
+        addMenuForm.reset();
+      }
+    });
+  }
+
+  public onUpdateMenu(menu: Menu): void {
+    this.menuService.updateMenu(menu).subscribe({
+      next: (response: Menu) => {
+        console.log(response);
+        this.getMenus();
+      },
+      error: (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    });
+  }
+
+  /* public onAddMenuDepr(addMenuForm: NgForm): void {
+    document.getElementById('add-Menu-Form')?.click();
+    this.menuService.addMenu(addMenuForm.value).subscribe(
+      (response: Menu) => {
+        console.log(response);
+        this.getMenus();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
-    );
-  }
+    )
+  } */
 
   public onOpenModal(menu: Menu, mode: string): void {
     const container = document.getElementById('main-container');
@@ -38,15 +80,13 @@ export class AppComponent implements OnInit {
     button.setAttribute('data-toggle', 'modal');
     if (mode === 'add') {
       button.setAttribute('data-target', '#addMenuModal');
-    }
-    if (mode === 'edit') {
+    } else if (mode === 'edit') {
+      this.editMenu = menu;
       button.setAttribute('data-target', '#updateMenuModal');
-    }
-    if (mode === 'delete') {
+    } else if (mode === 'delete') {
       button.setAttribute('data-target', '#deleteMenuModal');
     }
     container?.appendChild(button);
     button.click();
   }
-
 }

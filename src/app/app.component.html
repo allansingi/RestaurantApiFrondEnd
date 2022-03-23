@@ -31,6 +31,7 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Descrição: <a href="#">{{ menu?.menuDescription }}</a></li>
                     <li class="list-group-item"><i class="fa fa-money float-right"></i>{{ menu?.menuPrice }}</li>
+                    <li class="list-group-item"><i></i>Availability: {{ menu?.menuStack }}</li>
                 </ul>
                 <div class="card-body">
                     <div class="float-right btn-group btn-group-sm">
@@ -55,54 +56,55 @@
       </div>
       <div class="modal-body">
 
-        <form>
+        <form #addMenuForm="ngForm" (ngSubmit)="onAddMenu(addMenuForm)">
 
           <div class="form-group">
-            <label for="menuName">Menu name</label>
-            <input type="text" name="menuName" class="form-control" id="menuName" required>
+            <label for="menuName">Menu Name</label>
+            <input type="text" ngModel name="menuName" class="form-control" id="menuName" placeholder="Menu Name" required>
           </div>
 
           <div class="form-group">
             <label for="menuDescription">Menu Description</label>
-            <input type="text" name="menuDescription" class="form-control" id="menuDescription" required>
+            <input type="text" ngModel name="menuDescription" class="form-control" id="menuDescription" placeholder="Menu Description" required>
           </div>
 
           <div class="form-group">
             <label for="menuPrice">Menu Price</label>
-            <input type="text" name="menuPrice" class="form-control" id="menuPrice" required>
+            <input type="text" ngModel name="menuPrice" class="form-control" id="menuPrice" placeholder="Menu Price" required>
           </div>
 
           <div class="form-group">
             <label for="menuStack">Menu Stack</label>
-            <input type="text" name="menuStack" class="form-control" id="menuStack" required>
+            <input type="text" ngModel name="menuStack" class="form-control" id="menuStack" placeholder="Menu Stack" required>
           </div>
 
           <div class="form-group">
             <label for="menuActive">Menu Active</label>
-            <input type="text" name="menuActive" class="form-control" id="menuActive" required>
+            <input type="text" ngModel name="menuActive" class="form-control" id="menuActive" placeholder="Menu Active" required>
           </div>
 
           <div class="form-group">
             <label for="startMenuPeriod">Start Menu Period</label>
-            <input type="text" name="startMenuPeriod" class="form-control" id="startMenuPeriod" required>
+            <input type="text" ngModel name="startMenuPeriod" class="form-control" id="startMenuPeriod" placeholder="Start Menu Period" required>
           </div>
 
           <div class="form-group">
             <label for="endMenuPeriod">End Menu Period</label>
-            <input type="text" name="endMenuPeriod" class="form-control" id="endMenuPeriod" required>
+            <input type="text" ngModel name="endMenuPeriod" class="form-control" id="endMenuPeriod" placeholder="End Menu Period" required>
           </div>
 
           <div class="form-group">
             <label for="imageUrl">Image URL</label>
-            <input type="text" name="imageUrl" class="form-control" id="imageUrl" required>
+            <input type="text" ngModel name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL" required>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" id="add-menu-form" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button [disabled]="addMenuForm.invalid" type="submit" class="btn btn-primary">Add Menu</button>
           </div>
 
         </form>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="addMenuForm"class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -120,54 +122,57 @@
       </div>
       <div class="modal-body">
 
-        <form>
+        <form #editMenuForm="ngForm">
 
           <div class="form-group">
             <label for="menuName">Menu name</label>
-            <input type="text" name="menuName" class="form-control" id="menuName" required>
+            <input type="text" ngModel="{{ editMenu?.menuName }}" name="menuName" class="form-control" id="menuName" required>
           </div>
+
+          <input type="hidden" ngModel="{{ editMenu?.id }}" name="id" class="form-control" id="id" placeholder="menuName">
 
           <div class="form-group">
             <label for="menuDescription">Menu Description</label>
-            <input type="text" name="menuDescription" class="form-control" id="menuDescription" required>
+            <input type="text" ngModel="{{ editMenu?.menuDescription}}"name="menuDescription" class="form-control" id="menuDescription" required>
           </div>
 
           <div class="form-group">
             <label for="menuPrice">Menu Price</label>
-            <input type="text" name="menuPrice" class="form-control" id="menuPrice" required>
+            <input type="text" ngModel="{{ editMenu?.menuPrice }}" name="menuPrice" class="form-control" id="menuPrice" required>
           </div>
 
           <div class="form-group">
             <label for="menuStack">Menu Stack</label>
-            <input type="text" name="menuStack" class="form-control" id="menuStack" required>
+            <input type="text" ngModel="{{ editMenu?.menuStack }}" name="menuStack" class="form-control" id="menuStack" required>
           </div>
 
           <div class="form-group">
             <label for="menuActive">Menu Active</label>
-            <input type="text" name="menuActive" class="form-control" id="menuActive" required>
+            <input type="text" ngModel="{{ editMenu?.menuActive }}" name="menuActive" class="form-control" id="menuActive" required>
           </div>
 
           <div class="form-group">
             <label for="startMenuPeriod">Start Menu Period</label>
-            <input type="text" name="startMenuPeriod" class="form-control" id="startMenuPeriod" required>
+            <input type="text" ngModel="{{ editMenu?.startMenuPeriod }}" name="startMenuPeriod" class="form-control" id="startMenuPeriod" required>
           </div>
 
           <div class="form-group">
             <label for="endMenuPeriod">End Menu Period</label>
-            <input type="text" name="endMenuPeriod" class="form-control" id="endMenuPeriod" required>
+            <input type="text" ngModel="{{ editMenu?.endMenuPeriod}}" name="endMenuPeriod" class="form-control" id="endMenuPeriod" required>
           </div>
 
           <div class="form-group">
             <label for="imageUrl">Image URL</label>
-            <input type="text" name="imageUrl" class="form-control" id="imageUrl" required>
+            <input type="text" ngModel="{{ editMenu?.imageUrl }}" name="imageUrl" class="form-control" id="imageUrl" required>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
+            <button (click)="onUpdateMenu(editMenuForm.value)" type="submit" class="btn btn-primary">Save changes</button>
           </div>
 
         </form>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" id="addMenuForm"class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
