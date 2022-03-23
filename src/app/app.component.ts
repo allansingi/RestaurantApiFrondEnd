@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
 
   public menus: Menu[] = [];
   public editMenu: Menu | undefined;
+  public deleteMenu: Menu | undefined;
 
   constructor(private menuService: MenuService) {}
 
@@ -59,18 +60,17 @@ export class AppComponent implements OnInit {
     });
   }
 
-  /* public onAddMenuDepr(addMenuForm: NgForm): void {
-    document.getElementById('add-Menu-Form')?.click();
-    this.menuService.addMenu(addMenuForm.value).subscribe(
-      (response: Menu) => {
+  public onDeleteMenu(menuId: number): void {
+    this.menuService.deleteMenu(menuId).subscribe({
+      next: (response: void) => {
         console.log(response);
-        this.getMenus();
+        this.getMenus(); 
       },
-      (error: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         alert(error.message);
       }
-    )
-  } */
+    });
+  }
 
   public onOpenModal(menu: Menu, mode: string): void {
     const container = document.getElementById('main-container');
@@ -84,6 +84,7 @@ export class AppComponent implements OnInit {
       this.editMenu = menu;
       button.setAttribute('data-target', '#updateMenuModal');
     } else if (mode === 'delete') {
+      this.deleteMenu = menu;
       button.setAttribute('data-target', '#deleteMenuModal');
     }
     container?.appendChild(button);

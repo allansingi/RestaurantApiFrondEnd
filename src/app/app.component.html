@@ -115,7 +115,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="updateMenuModalLabel">Update Menu</h5>
+        <h5 class="modal-title" id="updateMenuModalLabel">Update Menu - {{ editMenu?.menuName }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -126,49 +126,49 @@
 
           <div class="form-group">
             <label for="menuName">Menu name</label>
-            <input type="text" ngModel="{{ editMenu?.menuName }}" name="menuName" class="form-control" id="menuName" required>
+            <input type="text" ngModel="{{ editMenu?.menuName }}" name="menuName" class="form-control" id="menuName" placeholder="Menu Name" required>
           </div>
 
-          <input type="hidden" ngModel="{{ editMenu?.id }}" name="id" class="form-control" id="id" placeholder="menuName">
+          <input type="hidden" ngModel="{{ editMenu?.id }}" name="id" class="form-control" id="id">
 
           <div class="form-group">
             <label for="menuDescription">Menu Description</label>
-            <input type="text" ngModel="{{ editMenu?.menuDescription}}"name="menuDescription" class="form-control" id="menuDescription" required>
+            <input type="text" ngModel="{{ editMenu?.menuDescription}}"name="menuDescription" class="form-control" id="menuDescription" placeholder="Menu Description" required>
           </div>
 
           <div class="form-group">
             <label for="menuPrice">Menu Price</label>
-            <input type="text" ngModel="{{ editMenu?.menuPrice }}" name="menuPrice" class="form-control" id="menuPrice" required>
+            <input type="text" ngModel="{{ editMenu?.menuPrice }}" name="menuPrice" class="form-control" id="menuPrice" placeholder="Menu Price"required>
           </div>
 
           <div class="form-group">
             <label for="menuStack">Menu Stack</label>
-            <input type="text" ngModel="{{ editMenu?.menuStack }}" name="menuStack" class="form-control" id="menuStack" required>
+            <input type="text" ngModel="{{ editMenu?.menuStack }}" name="menuStack" class="form-control" id="menuStack" placeholder="Menu Price" required>
           </div>
 
           <div class="form-group">
             <label for="menuActive">Menu Active</label>
-            <input type="text" ngModel="{{ editMenu?.menuActive }}" name="menuActive" class="form-control" id="menuActive" required>
+            <input type="text" ngModel="{{ editMenu?.menuActive }}" name="menuActive" class="form-control" id="menuActive" placeholder="Menu Active" required>
           </div>
 
           <div class="form-group">
             <label for="startMenuPeriod">Start Menu Period</label>
-            <input type="text" ngModel="{{ editMenu?.startMenuPeriod }}" name="startMenuPeriod" class="form-control" id="startMenuPeriod" required>
+            <input type="text" ngModel="{{ editMenu?.startMenuPeriod }}" name="startMenuPeriod" class="form-control" id="startMenuPeriod" placeholder="Start Menu Period" required>
           </div>
 
           <div class="form-group">
             <label for="endMenuPeriod">End Menu Period</label>
-            <input type="text" ngModel="{{ editMenu?.endMenuPeriod}}" name="endMenuPeriod" class="form-control" id="endMenuPeriod" required>
+            <input type="text" ngModel="{{ editMenu?.endMenuPeriod}}" name="endMenuPeriod" class="form-control" id="endMenuPeriod" placeholder="End Menu Period" required>
           </div>
 
           <div class="form-group">
             <label for="imageUrl">Image URL</label>
-            <input type="text" ngModel="{{ editMenu?.imageUrl }}" name="imageUrl" class="form-control" id="imageUrl" required>
+            <input type="text" ngModel="{{ editMenu?.imageUrl }}" name="imageUrl" class="form-control" id="imageUrl" placeholder="Image URL" required>
           </div>
 
           <div class="modal-footer">
             <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Close</button>
-            <button (click)="onUpdateMenu(editMenuForm.value)" type="submit" class="btn btn-primary">Save changes</button>
+            <button (click)="onUpdateMenu(editMenuForm.value)" data-dismiss="modal" class="btn btn-primary">Save changes</button>
           </div>
 
         </form>
@@ -189,10 +189,10 @@
            </button>
         </div>
         <div class="modal-body">
-           <p>Are you sure you want to delete Menu</p>
+           <p>Are you sure you want to delete Menu {{ deleteMenu?.menuName }}</p>
            <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-              <button class="btn btn-danger" data-dismiss="modal">Yes</button>
+              <button (click)="onDeleteMenu(deleteMenu!.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
            </div>
         </div>
      </div>
