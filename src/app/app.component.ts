@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   }
 
   public getMenus(): void {
+    //console.log(key);
     this.menuService.getMenus().subscribe({
       next: (response: Menu[]) => {
         this.menus = response;
@@ -70,6 +71,19 @@ export class AppComponent implements OnInit {
         alert(error.message);
       }
     });
+  }
+
+  public searchMenus(key: string): void {
+    const menuResults: Menu[] = [];
+    for (const menu of this.menus) {
+      if (menu.menuName.toLowerCase().indexOf(key) !== -1) {
+        menuResults.push(menu);
+      }
+    }
+    this.menus = menuResults;
+    if (menuResults.length === 0 || !key) {
+      this.getMenus();
+    }
   }
 
   public onOpenModal(menu: Menu, mode: string): void {
